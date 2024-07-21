@@ -1,0 +1,15 @@
+---
+# ghproj https://github.com/suzuki-shunsuke/ghproj
+entries:
+  - query: |
+      is:issue owner:szksh-lab
+    project_id: PVT_kwHOAMtMJ84AQCf4
+    # type: issue, pr
+    # title
+    # label
+    # repository name
+    # repository properties
+    # state: open, closed
+    # merged: true/false
+    # datetime created, updated, closed, merged
+    # OR

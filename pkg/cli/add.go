@@ -1,9 +1,12 @@
 package cli
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
+	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 	"github.com/suzuki-shunsuke/ghproj/pkg/log"
 	"github.com/urfave/cli/v2"
 )
@@ -31,6 +34,7 @@ func (rc *addCommand) action(c *cli.Context) error {
 	logE := rc.logE
 	log.SetLevel(c.String("log-level"), logE)
 	log.SetColor(c.String("log-color"), logE)
-	return add.Add(c.Context, logE, fs, &add.Param{ //nolint:wrapcheck
+	gh := github.New(c.Context, os.Getenv("GITHUB_TOKEN"))
+	return add.Add(c.Context, logE, fs, gh, &add.Param{ //nolint:wrapcheck
 	})
 }
