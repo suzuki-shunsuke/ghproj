@@ -31,6 +31,6 @@ func (rc *addCommand) action(c *cli.Context) error {
 	logE := rc.logE
 	log.SetLevel(c.String("log-level"), logE)
 	log.SetColor(c.String("log-color"), logE)
-	return add.Add(c.Context, fs, &add.Param{ //nolint:wrapcheck
+	return add.Add(c.Context, logE, fs, &add.Param{ //nolint:wrapcheck
 	})
 }
