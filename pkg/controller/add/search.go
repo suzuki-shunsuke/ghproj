@@ -23,28 +23,38 @@ func listIssues(ctx context.Context, v4Client *githubv4.Client, repoOwner, repoN
 					Title githubv4.String
 				} `graphql:"... on Issue"`
 			}
-		} `graphql:"search(first: 100, query: $searchQuery, type: $searchType)"`
+			PageInfo struct {
+				EndCursor   githubv4.String
+				HasNextPage bool
+			}
+		} `graphql:"search(first: 100, query: $searchQuery, type: $searchType, after: $cursor)"`
 	}
 	variables := map[string]interface{}{
 		"searchQuery": githubv4.String(fmt.Sprintf(`repo:%s/%s state:open "%s" in:title`, repoOwner, repoName, title)),
 		"searchType":  githubv4.SearchTypeIssue,
+		"cursor":      (*githubv4.String)(nil),
 	}
-	// TODO pagination
+	var items []*Item
+	for range 30 {
+		if err := v4Client.Query(ctx, &q, variables); err != nil {
+			return nil, fmt.Errorf("get an issue by GitHub GraphQL API: %w", err)
+		}
+		for _, node := range q.Search.Nodes {
+			if title != string(node.Issue.Title) {
+				continue
+			}
+			issue := &Item{
+				ID:    string(node.Issue.ID),
+				Title: string(node.Issue.Title),
+				// Number: int(node.Issue.Number),
+			}
+			items = append(items, issue)
+		}
 
-	if err := v4Client.Query(ctx, &q, variables); err != nil {
-		return nil, fmt.Errorf("get an issue by GitHub GraphQL API: %w", err)
-	}
-	issues := make([]*Item, 0, len(q.Search.Nodes))
-	for _, node := range q.Search.Nodes {
-		if title != string(node.Issue.Title) {
-			continue
+		if !q.Search.PageInfo.HasNextPage {
+			return items, nil
 		}
-		issue := &Item{
-			ID:    string(node.Issue.ID),
-			Title: string(node.Issue.Title),
-			// Number: int(node.Issue.Number),
-		}
-		issues = append(issues, issue)
+		variables["cursor"] = githubv4.NewString(q.Search.PageInfo.EndCursor)
 	}
-	return issues, nil
+	return items, nil
 }
