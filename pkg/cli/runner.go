@@ -46,6 +46,9 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 		EnableBashCompletion: true,
 		Commands: []*cli.Command{
 			(&versionCommand{}).command(),
+			(&initCommand{
+				logE: r.LogE,
+			}).command(),
 			(&addCommand{
 				logE: r.LogE,
 			}).command(),
