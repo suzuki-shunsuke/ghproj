@@ -13,11 +13,20 @@ type Config struct {
 	Entries []*Entry
 }
 
-type Entry struct{}
+type Entry struct {
+	ProjectID string
+}
 
-type Item struct{}
-
-type GitHub interface{}
+type Item struct {
+	ID     string // issue and pull request id
+	Title  string
+	Labels []string
+	Org    string
+	User   string
+	Repo   string
+	Open   bool
+	Merged bool
+}
 
 func Add(ctx context.Context, fs afero.Fs, _ *Param) error {
 	cfg := &Config{}
@@ -34,7 +43,7 @@ func Add(ctx context.Context, fs afero.Fs, _ *Param) error {
 	return nil
 }
 
-func handleEntry(ctx context.Context, gh GitHub, _ *Config, _ *Entry) error {
+func handleEntry(ctx context.Context, gh GitHub, _ *Config, entry *Entry) error {
 	// Search GitHub Issues and Pull Requests
 	items, err := searchIssuesAndPRs(ctx, gh)
 	if err != nil {
@@ -46,22 +55,14 @@ func handleEntry(ctx context.Context, gh GitHub, _ *Config, _ *Entry) error {
 		if excludeItem(item) {
 			continue
 		}
-		if err := addItemToProject(ctx, gh, item); err != nil {
+		if err := addItemToProject(ctx, gh, item, entry.ProjectID); err != nil {
 			return fmt.Errorf("add an item to a project: %w", err)
 		}
 	}
 	return nil
 }
 
-func searchIssuesAndPRs(_ context.Context, _ GitHub) ([]*Item, error) {
-	return nil, nil
-}
-
 // excludeItem returns true if the item should be excluded.
 func excludeItem(_ *Item) bool {
 	return false
-}
-
-func addItemToProject(_ context.Context, _ GitHub, _ *Item) error {
-	return nil
 }
