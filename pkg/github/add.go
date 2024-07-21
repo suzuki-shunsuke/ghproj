@@ -15,11 +15,9 @@ type InputAddItemToProject struct {
 
 func (c *Client) AddItemToProject(ctx context.Context, logE *logrus.Entry, input *InputAddItemToProject) error {
 	var m struct {
-		AddProjectNextItem struct {
-			ProjectNextItem struct {
-				Title string
-			}
-		} `graphql:"addProjectNextItem(input: $input)"`
+		CreateProjectItem struct {
+			ProjectV2Item ProjectItem `graphql:"item"`
+		} `graphql:"addProjectV2ItemById(input:$input)"`
 	}
 	logE.WithFields(logrus.Fields{
 		"project_id": input.ProjectID,
@@ -32,4 +30,8 @@ func (c *Client) AddItemToProject(ctx context.Context, logE *logrus.Entry, input
 		return fmt.Errorf("add an issue or a pull request to a GitHub Project by GitHub GraphQL API (addProjectNextItem): %w", err)
 	}
 	return nil
+}
+
+type ProjectItem struct {
+	Id string
 }

@@ -26,6 +26,10 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 					ID    githubv4.String
 					Title githubv4.String
 				} `graphql:"... on Issue"`
+				PullRequest struct {
+					ID    githubv4.String
+					Title githubv4.String
+				} `graphql:"... on PullRequest"`
 			}
 			PageInfo struct {
 				EndCursor   githubv4.String
@@ -44,12 +48,18 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 			return nil, fmt.Errorf("get an issue by GitHub GraphQL API: %w", err)
 		}
 		for _, node := range q.Search.Nodes {
-			issue := &Item{
+			item := &Item{
 				ID:    string(node.Issue.ID),
 				Title: string(node.Issue.Title),
 				// Number: int(node.Issue.Number),
 			}
-			items = append(items, issue)
+			if node.PullRequest.ID != "" {
+				item = &Item{
+					ID:    string(node.PullRequest.ID),
+					Title: string(node.PullRequest.Title),
+				}
+			}
+			items = append(items, item)
 		}
 
 		if !q.Search.PageInfo.HasNextPage {
