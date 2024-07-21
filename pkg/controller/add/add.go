@@ -3,6 +3,7 @@ package add
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
@@ -51,7 +52,7 @@ func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, _ *Par
 
 func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, entry *Entry) error {
 	// Search GitHub Issues and Pull Requests
-	items, err := gh.SearchItems(ctx, entry.Query)
+	items, err := gh.SearchItems(ctx, strings.ReplaceAll(entry.Query, "\n", " "))
 	if err != nil {
 		return fmt.Errorf("search GitHub Issues and Pull Requests: %w", err)
 	}

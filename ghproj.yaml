@@ -2,7 +2,10 @@
 # ghproj https://github.com/suzuki-shunsuke/ghproj
 entries:
   - query: |
-      is:issue owner:szksh-lab
+      is:open
+      -project:suzuki-shunsuke/5
+      archived:false
+      owner:aquaproj
     project_id: PVT_kwHOAMtMJ84AQCf4
     # type: issue, pr
     # title

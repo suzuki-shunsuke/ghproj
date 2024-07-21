@@ -33,5 +33,5 @@ func (c *Client) AddItemToProject(ctx context.Context, logE *logrus.Entry, input
 }
 
 type ProjectItem struct {
-	Id string
+	ID string
 }
