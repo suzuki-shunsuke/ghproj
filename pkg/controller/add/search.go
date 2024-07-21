@@ -9,8 +9,9 @@ import (
 
 type GitHub interface{}
 
-func searchIssuesAndPRs(_ context.Context, _ GitHub) ([]*Item, error) {
-	return nil, nil
+func searchIssuesAndPRs(ctx context.Context, _ GitHub) ([]*Item, error) {
+	var v4Client *githubv4.Client
+	return listIssues(ctx, v4Client, "", "", "")
 }
 
 func listIssues(ctx context.Context, v4Client *githubv4.Client, repoOwner, repoName, title string) ([]*Item, error) {
