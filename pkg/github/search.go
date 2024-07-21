@@ -1,4 +1,4 @@
-package add
+package github
 
 import (
 	"context"
@@ -7,14 +7,18 @@ import (
 	"github.com/shurcooL/githubv4"
 )
 
-type GitHub interface{}
-
-func searchIssuesAndPRs(ctx context.Context, _ GitHub, query string) ([]*Item, error) {
-	var v4Client *githubv4.Client
-	return listIssues(ctx, v4Client, query)
+type Item struct {
+	ID     string // issue and pull request id
+	Title  string
+	Labels []string
+	Org    string
+	User   string
+	Repo   string
+	Open   bool
+	Merged bool
 }
 
-func listIssues(ctx context.Context, v4Client *githubv4.Client, query string) ([]*Item, error) {
+func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error) {
 	var q struct {
 		Search struct {
 			Nodes []struct {
@@ -36,7 +40,7 @@ func listIssues(ctx context.Context, v4Client *githubv4.Client, query string) ([
 	}
 	var items []*Item
 	for range 30 {
-		if err := v4Client.Query(ctx, &q, variables); err != nil {
+		if err := c.v4Client.Query(ctx, &q, variables); err != nil {
 			return nil, fmt.Errorf("get an issue by GitHub GraphQL API: %w", err)
 		}
 		for _, node := range q.Search.Nodes {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
+	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 )
 
 type Param struct{}
@@ -30,13 +31,16 @@ type Item struct {
 	Merged bool
 }
 
-func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, _ *Param) error {
+type GitHub interface {
+	AddItemToProject(ctx context.Context, logE *logrus.Entry, input *github.InputAddItemToProject) error
+	SearchItems(ctx context.Context, query string) ([]*github.Item, error)
+}
+
+func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, _ *Param) error {
 	cfg := &Config{}
 	if err := findAndReadConfig(fs, cfg); err != nil {
 		return fmt.Errorf("find and read a configuration file: %w", err)
 	}
-	var gh GitHub
-
 	for _, entry := range cfg.Entries {
 		if err := handleEntry(ctx, logE, gh, cfg, entry); err != nil {
 			return fmt.Errorf("handle an entry: %w", err)
@@ -47,7 +51,7 @@ func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, _ *Param) error {
 
 func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, entry *Entry) error {
 	// Search GitHub Issues and Pull Requests
-	items, err := searchIssuesAndPRs(ctx, gh, entry.Query)
+	items, err := gh.SearchItems(ctx, entry.Query)
 	if err != nil {
 		return fmt.Errorf("search GitHub Issues and Pull Requests: %w", err)
 	}
@@ -60,7 +64,10 @@ func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, 
 		if excludeItem(item) {
 			continue
 		}
-		if err := addItemToProject(ctx, logE, gh, item, entry.ProjectID); err != nil {
+		if err := gh.AddItemToProject(ctx, logE, &github.InputAddItemToProject{
+			ProjectID: entry.ProjectID,
+			ContentID: item.ID,
+		}); err != nil {
 			return fmt.Errorf("add an item to a project: %w", err)
 		}
 	}
@@ -68,6 +75,6 @@ func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, 
 }
 
 // excludeItem returns true if the item should be excluded.
-func excludeItem(_ *Item) bool {
+func excludeItem(_ *github.Item) bool {
 	return false
 }
