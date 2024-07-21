@@ -51,32 +51,19 @@ The scope `read:org` and `project` are required.
 
 ghproj.yaml
 
+e.g.
+
 ```yaml
+# ghproj https://github.com/suzuki-shunsuke/ghproj
 entries:
-  - user: suzuki-shunsuke
-    # type: issue, pr
-    # title
-    # label
-    # repository name
-    # repository properties
-    # state: open, closed
-    # merged: true/false
-    # datetime created, updated, closed, merged
-    # OR
-    query: |
-      user:suzuki-shunsuke -label:renovate
-    project_number: 5
-    types:
-      - issue
-      - pr
-    repositories:
-      - foo
-    excluded_repositories:
-      - foo
-    excluded_labels:
-      - renovate
-  - org: aquaproj
-    project_number: 5
+  - query: |
+      is:open
+      archived:false
+      -project:suzuki-shunsuke/5
+      -label:create
+      owner:szksh-lab
+      owner:lintnet
+    project_id: PVT_kwHOAMtMJ84AQCf4
 ```
 
 ## Run ghproj by GitHub Actions
