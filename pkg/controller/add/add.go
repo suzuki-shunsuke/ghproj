@@ -8,6 +8,6 @@ import (
 
 type Param struct{}
 
-func Add(ctx context.Context, _ afero.Fs, _ *Param) error {
+func Add(_ context.Context, _ afero.Fs, _ *Param) error {
 	return nil
 }
