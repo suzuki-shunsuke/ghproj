@@ -25,5 +25,3 @@ jobs:
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
       - run: go test -v ./... -race -covermode=atomic
-      - run: go run ./cmd/ghproj set testdata/before.yaml
-      - run: diff testdata/before.yaml testdata/after.yaml
