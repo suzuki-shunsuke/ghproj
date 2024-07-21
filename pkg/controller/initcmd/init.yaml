@@ -1,0 +1,27 @@
+---
+# ghproj https://github.com/suzuki-shunsuke/ghproj
+entries:
+  - user: suzuki-shunsuke
+    # type: issue, pr
+    # title
+    # label
+    # repository name
+    # repository properties
+    # state: open, closed
+    # merged: true/false
+    # datetime created, updated, closed, merged
+    # OR
+    query: |
+      user:suzuki-shunsuke -label:renovate
+    project_number: 5
+    types:
+      - issue
+      - pr
+    repositories:
+      - foo
+    excluded_repositories:
+      - foo
+    excluded_labels:
+      - renovate
+  - org: aquaproj
+    project_number: 5
