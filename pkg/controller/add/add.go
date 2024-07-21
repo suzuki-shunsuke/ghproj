@@ -53,10 +53,6 @@ func handleEntry(ctx context.Context, gh GitHub, _ *Config, _ *Entry) error {
 	return nil
 }
 
-func findAndReadConfig(_ afero.Fs, _ *Config) error {
-	return nil
-}
-
 func searchIssuesAndPRs(_ context.Context, _ GitHub) ([]*Item, error) {
 	return nil, nil
 }
