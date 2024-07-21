@@ -59,7 +59,7 @@ func findConfig(fs afero.Fs) (afero.File, error) {
 	if err == nil {
 		return f, nil
 	}
-	return fs.Open(".ghproj.yaml")
+	return fs.Open(".ghproj.yaml") //nolint:wrapcheck
 }
 
 func findAndReadConfig(fs afero.Fs, cfg *Config) error {
