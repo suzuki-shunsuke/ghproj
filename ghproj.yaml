@@ -5,7 +5,11 @@ entries:
       is:open
       -project:suzuki-shunsuke/5
       archived:false
-      owner:aquaproj
+      owner:suzuki-shunsuke
+      is:public
+    expr: |
+      (! Item.Repo.IsFork) &&
+      (Item.Title != "Dependency Dashboard")
     project_id: PVT_kwHOAMtMJ84AQCf4
     # type: issue, pr
     # title
@@ -16,3 +20,8 @@ entries:
     # merged: true/false
     # datetime created, updated, closed, merged
     # OR
+  # - expr: |
+  #     (Item.Open && Item.Repo.IsArchived) ||
+  #     (Item.Title == "Dependency Dashboard")
+  #   action: archive
+  #   project_id: PVT_kwHOAMtMJ84AQCf4

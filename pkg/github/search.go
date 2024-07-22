@@ -8,27 +8,41 @@ import (
 )
 
 type Item struct {
-	ID     string // issue and pull request id
-	Title  string
-	Labels []string
-	Org    string
-	User   string
-	Repo   string
-	Open   bool
-	Merged bool
+	ID         string // issue and pull request id
+	State      string
+	Title      string
+	Labels     []string
+	Open       bool
+	Merged     bool
+	IsArchived bool
+	Repo       Repo
+	Author     string
 }
 
-func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error) {
+type Repo struct {
+	Owner      string
+	Repo       string
+	IsArchived bool
+	IsFork     bool
+}
+
+func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error) { //nolint:funlen
 	var q struct {
 		Search struct {
 			Nodes []struct {
 				Issue struct {
-					ID    githubv4.String
-					Title githubv4.String
+					ID         githubv4.String
+					Title      githubv4.String
+					Repository struct {
+						IsFork bool
+					}
 				} `graphql:"... on Issue"`
 				PullRequest struct {
-					ID    githubv4.String
-					Title githubv4.String
+					ID         githubv4.String
+					Title      githubv4.String
+					Repository struct {
+						IsFork bool
+					}
 				} `graphql:"... on PullRequest"`
 			}
 			PageInfo struct {
@@ -48,16 +62,26 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 			return nil, fmt.Errorf("get an issue by GitHub GraphQL API: %w", err)
 		}
 		for _, node := range q.Search.Nodes {
-			item := &Item{
-				ID:    string(node.Issue.ID),
-				Title: string(node.Issue.Title),
-				// Number: int(node.Issue.Number),
-			}
-			if node.PullRequest.ID != "" {
+			var item *Item
+			switch {
+			case node.Issue.Title != "":
+				item = &Item{
+					ID:    string(node.Issue.ID),
+					Title: string(node.Issue.Title),
+					Repo: Repo{
+						IsFork: node.Issue.Repository.IsFork,
+					},
+				}
+			case node.PullRequest.Title != "":
 				item = &Item{
 					ID:    string(node.PullRequest.ID),
 					Title: string(node.PullRequest.Title),
+					Repo: Repo{
+						IsFork: node.PullRequest.Repository.IsFork,
+					},
 				}
+			default:
+				continue
 			}
 			items = append(items, item)
 		}
