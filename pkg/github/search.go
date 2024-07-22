@@ -26,7 +26,7 @@ type Repo struct {
 	IsFork     bool
 }
 
-func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error) {
+func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error) { //nolint:funlen
 	var q struct {
 		Search struct {
 			Nodes []struct {
@@ -63,7 +63,8 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 		}
 		for _, node := range q.Search.Nodes {
 			var item *Item
-			if node.Issue.Title != "" {
+			switch {
+			case node.Issue.Title != "":
 				item = &Item{
 					ID:    string(node.Issue.ID),
 					Title: string(node.Issue.Title),
@@ -71,7 +72,7 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 						IsFork: node.Issue.Repository.IsFork,
 					},
 				}
-			} else if node.PullRequest.Title != "" {
+			case node.PullRequest.Title != "":
 				item = &Item{
 					ID:    string(node.PullRequest.ID),
 					Title: string(node.PullRequest.Title),
@@ -79,7 +80,7 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 						IsFork: node.PullRequest.Repository.IsFork,
 					},
 				}
-			} else {
+			default:
 				continue
 			}
 			items = append(items, item)
