@@ -2,27 +2,45 @@
 
 Add GitHub Issues and Pull Requests to GitHub Projects.
 
-## Status
-
-This project is still under development.
-Please don't use this yet.
-
 ## Motivation
 
 I manage a lot of OSS projects, so I have to handle a lot of issues and pull requests.
-So I want to manage them using GitHub User and Organization Projects.
+So I want to manage them using a GitHub Project.
 
-e.g.
-
-- [suzuki-shunsuke](https://github.com/users/suzuki-shunsuke/projects/5)
-- [aquaproj](https://github.com/orgs/aquaproj/projects/8)
-- [lintnet](https://github.com/orgs/lintnet/projects/1)
-
-By executing `ghproj` periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), you can add issues and projects to GitHub Projects automatically.
+I've developed this tool to gather issues and pull requests of all my OSS in a single GitHub Project.
+By executing this tool periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), you can add issues and projects to GitHub Projects automatically.
 
 ## Install
 
-Coming soon.
+`ghproj` is a single binary written in Go.
+So you only need to put the executable binary into `$PATH`.
+
+1. [Homebrew](https://brew.sh/)
+
+```sh
+brew install suzuki-shunsuke/ghproj/ghproj
+```
+
+2. [Scoop](https://scoop.sh/)
+
+```sh
+scoop bucket add suzuki-shunsuke https://github.com/suzuki-shunsuke/scoop-bucket
+scoop install ghproj
+```
+
+3. [aqua](https://aquaproj.github.io/)
+
+```sh
+aqua g -i suzuki-shunsuke/ghproj
+```
+
+4. Download a prebuilt binary from [GitHub Releases](https://github.com/suzuki-shunsuke/ghproj/releases) and install it into `$PATH`
+
+5. Go
+
+```sh
+go install github.com/suzuki-shunsuke/ghproj/cmd/ghproj@latest
+```
 
 ## Usage
 
@@ -54,7 +72,6 @@ ghproj.yaml
 e.g.
 
 ```yaml
-# ghproj https://github.com/suzuki-shunsuke/ghproj
 entries:
   - query: |
       is:open
@@ -63,12 +80,78 @@ entries:
       -label:create
       owner:szksh-lab
       owner:lintnet
+    expr: |
+      (! Item.Repo.IsFork) &&
+      (Item.Title != "Dependency Dashboard") &&
+      ! (Item.Repo.Name startsWith "homebrew-") &&
+      ! (Item.Repo.Name startsWith "test-")
     project_id: PVT_kwHOAMtMJ84AQCf4
+```
+
+- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project
+- `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
+
+`Item`:
+
+```json
+{
+  "Title": "issue or pull request title",
+  "Repo": {
+    "Owner": "repository owner name",
+    "Name": "repository name",
+    "IsArchived": false,
+    "IsFork": false
+  }
+}
+```
+
+- `project_id`: GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
+
+```sh
+gh project list
+```
+
+## Archive items
+
+You can archive items by `ghproj add` command.
+
+```sh
+ghproj add
+```
+
+ghproj.yaml
+
+```yaml
+entries:
+  - expr: |
+      Item.Repo.IsArchived
+    action: archive
+    project_id: PVT_kwHOAMtMJ84AQCf4
+```
+
+`Item`:
+
+```json
+{
+  "State": "CLOSED",
+  "Title": "issue or pull request title",
+  "Labels": ["enhancement"],
+  "Open": false,
+  "Author": "octokit",
+  "Repo": {
+    "Owner": "repository owner name",
+    "Name": "repository name",
+    "IsArchived": false,
+    "IsFork": false
+  }
+}
 ```
 
 ## Run ghproj by GitHub Actions
 
-Coming soon.
+Please see [Workflow](.github/workflows/update-project.yaml).
+
+This workflow is executed periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), and issues and pull requests of my OSS are added to [my GitHub Project](https://github.com/users/suzuki-shunsuke/projects/5).
 
 ## LICENSE
 
