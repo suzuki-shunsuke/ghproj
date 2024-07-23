@@ -6,10 +6,14 @@ entries:
       -project:suzuki-shunsuke/5
       archived:false
       owner:suzuki-shunsuke
+      owner:aquaproj
+      owner:lintnet
       is:public
     expr: |
       (! Item.Repo.IsFork) &&
-      (Item.Title != "Dependency Dashboard")
+      (Item.Title != "Dependency Dashboard") &&
+      ! (Item.Repo.Name startsWith "homebrew-") &&
+      ! (Item.Repo.Name startsWith "test-")
     project_id: PVT_kwHOAMtMJ84AQCf4
     # type: issue, pr
     # title
@@ -21,7 +25,12 @@ entries:
     # datetime created, updated, closed, merged
     # OR
   # - expr: |
-  #     (Item.Open && Item.Repo.IsArchived) ||
-  #     (Item.Title == "Dependency Dashboard")
-  #   action: archive
-  #   project_id: PVT_kwHOAMtMJ84AQCf4
+  #     Item.Repo.IsArchived ||
+  #     (Item.Title == "Dependency Dashboard") ||
+  #     Item.Repo.IsFork ||
+  #     (Item.Repo.Name startsWith "homebrew-") ||
+  #     (Item.Repo.Name startsWith "test-")
+  - expr: |
+      ! Item.Open || Item.Repo.IsArchived
+    action: archive
+    project_id: PVT_kwHOAMtMJ84AQCf4
