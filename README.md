@@ -7,7 +7,8 @@ Add GitHub Issues and Pull Requests to GitHub Projects.
 I manage a lot of OSS projects, so I have to handle a lot of issues and pull requests.
 So I want to manage them using a GitHub Project.
 
-By executing `ghproj` periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), you can add issues and projects to GitHub Projects automatically.
+I've developed this tool to gather issues and pull requests of all my OSS in a single GitHub Project.
+By executing this tool periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), you can add issues and projects to GitHub Projects automatically.
 
 ## Install
 
