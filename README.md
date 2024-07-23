@@ -2,11 +2,6 @@
 
 Add GitHub Issues and Pull Requests to GitHub Projects.
 
-## Status
-
-This project is still under development.
-Please don't use this yet.
-
 ## Motivation
 
 I manage a lot of OSS projects, so I have to handle a lot of issues and pull requests.
@@ -82,7 +77,6 @@ ghproj.yaml
 e.g.
 
 ```yaml
-# ghproj https://github.com/suzuki-shunsuke/ghproj
 entries:
   - query: |
       is:open
@@ -91,7 +85,71 @@ entries:
       -label:create
       owner:szksh-lab
       owner:lintnet
+    expr: |
+      (! Item.Repo.IsFork) &&
+      (Item.Title != "Dependency Dashboard") &&
+      ! (Item.Repo.Name startsWith "homebrew-") &&
+      ! (Item.Repo.Name startsWith "test-")
     project_id: PVT_kwHOAMtMJ84AQCf4
+```
+
+- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project
+- `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
+
+`Item`:
+
+```json
+{
+  "Title": "issue or pull request title",
+  "Repo": {
+    "Owner": "repository owner name",
+    "Name": "repository name",
+    "IsArchived": false,
+    "IsFork": false
+  }
+}
+```
+
+- `project_id`: GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
+
+```sh
+gh project list
+```
+
+## Archive items
+
+You can archive items by `ghproj add` command.
+
+```sh
+ghproj add
+```
+
+ghproj.yaml
+
+```yaml
+entries:
+  - expr: |
+      Item.Repo.IsArchived
+    action: archive
+    project_id: PVT_kwHOAMtMJ84AQCf4
+```
+
+`Item`:
+
+```json
+{
+  "State": "CLOSED",
+  "Title": "issue or pull request title",
+  "Labels": ["enhancement"],
+  "Open": false,
+  "Author": "octokit",
+  "Repo": {
+    "Owner": "repository owner name",
+    "Name": "repository name",
+    "IsArchived": false,
+    "IsFork": false
+  }
+}
 ```
 
 ## Run ghproj by GitHub Actions
