@@ -49,14 +49,14 @@ go install github.com/suzuki-shunsuke/ghproj/cmd/ghproj@latest
 ## Usage
 
 ```sh
-ghproj init # Scafold a configuration file ghproj.yaml
+ghproj init # Scaffold a configuration file ghproj.yaml
 ghproj add # Add issues and pull requests to GitHub Projects
 ```
 
 ## GitHub Access token
 
 ghproj needs a GitHub access token.
-You need to pass a token via environmenet variable `GITHUB_TOKEN`.
+You need to pass a token via environment variable `GITHUB_TOKEN`.
 
 There are two options.
 
