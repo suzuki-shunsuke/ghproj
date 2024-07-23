@@ -19,7 +19,9 @@ jobs:
       - run: ghproj -v
         env:
           GITHUB_TOKEN: ${{github.token}}
-      - run: ghproj add
+      - run: |
+          ghproj add
+          exit 1
         env:
           GITHUB_TOKEN: ${{secrets.GH_PAT}}
       - run: |
