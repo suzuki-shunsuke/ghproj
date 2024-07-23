@@ -22,7 +22,35 @@ By executing `ghproj` periodically by [GitHub Actions schedule event](https://do
 
 ## Install
 
-Coming soon.
+`ghproj` is a single binary written in Go.
+So you only need to put the executable binary into `$PATH`.
+
+1. [Homebrew](https://brew.sh/)
+
+```sh
+brew install suzuki-shunsuke/ghproj/ghproj
+```
+
+2. [Scoop](https://scoop.sh/)
+
+```sh
+scoop bucket add suzuki-shunsuke https://github.com/suzuki-shunsuke/scoop-bucket
+scoop install ghproj
+```
+
+3. [aqua](https://aquaproj.github.io/)
+
+```sh
+aqua g -i suzuki-shunsuke/ghproj
+```
+
+4. Download a prebuilt binary from [GitHub Releases](https://github.com/suzuki-shunsuke/ghproj/releases) and install it into `$PATH`
+
+5. Go
+
+```sh
+go install github.com/suzuki-shunsuke/ghproj/cmd/ghproj@latest
+```
 
 ## Usage
 
@@ -68,7 +96,7 @@ entries:
 
 ## Run ghproj by GitHub Actions
 
-Coming soon.
+Please see [Workflow](.github/workflows/update-project.yaml).
 
 ## LICENSE
 
