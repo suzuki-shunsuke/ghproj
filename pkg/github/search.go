@@ -21,7 +21,7 @@ type Item struct {
 
 type Repo struct {
 	Owner      string
-	Repo       string
+	Name       string
 	IsArchived bool
 	IsFork     bool
 }
@@ -33,16 +33,12 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 				Issue struct {
 					ID         githubv4.String
 					Title      githubv4.String
-					Repository struct {
-						IsFork bool
-					}
+					Repository Repository
 				} `graphql:"... on Issue"`
 				PullRequest struct {
 					ID         githubv4.String
 					Title      githubv4.String
-					Repository struct {
-						IsFork bool
-					}
+					Repository Repository
 				} `graphql:"... on PullRequest"`
 			}
 			PageInfo struct {
@@ -69,7 +65,10 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 					ID:    string(node.Issue.ID),
 					Title: string(node.Issue.Title),
 					Repo: Repo{
-						IsFork: node.Issue.Repository.IsFork,
+						Owner:      node.Issue.Repository.Owner.Login,
+						Name:       node.Issue.Repository.Name,
+						IsArchived: node.Issue.Repository.IsArchived,
+						IsFork:     node.Issue.Repository.IsFork,
 					},
 				}
 			case node.PullRequest.Title != "":
@@ -77,7 +76,10 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 					ID:    string(node.PullRequest.ID),
 					Title: string(node.PullRequest.Title),
 					Repo: Repo{
-						IsFork: node.PullRequest.Repository.IsFork,
+						Owner:      node.PullRequest.Repository.Owner.Login,
+						Name:       node.PullRequest.Repository.Name,
+						IsArchived: node.PullRequest.Repository.IsArchived,
+						IsFork:     node.PullRequest.Repository.IsFork,
 					},
 				}
 			default:

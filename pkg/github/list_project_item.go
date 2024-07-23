@@ -156,7 +156,7 @@ func (c *Client) ListItems(ctx context.Context, projectID string) ([]*Item, erro
 					Author: node.Content.Issue.Author.Login,
 					Repo: Repo{
 						Owner:      node.Content.Issue.Repository.Owner.Login,
-						Repo:       node.Content.Issue.Repository.Name,
+						Name:       node.Content.Issue.Repository.Name,
 						IsArchived: node.Content.Issue.Repository.IsArchived,
 						IsFork:     node.Content.Issue.Repository.IsFork,
 					},
@@ -175,7 +175,7 @@ func (c *Client) ListItems(ctx context.Context, projectID string) ([]*Item, erro
 					Author: node.Content.PullRequest.Author.Login,
 					Repo: Repo{
 						Owner:      node.Content.Issue.Repository.Owner.Login,
-						Repo:       node.Content.Issue.Repository.Name,
+						Name:       node.Content.Issue.Repository.Name,
 						IsArchived: node.Content.Issue.Repository.IsArchived,
 						IsFork:     node.Content.Issue.Repository.IsFork,
 					},
