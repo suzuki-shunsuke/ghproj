@@ -13,7 +13,10 @@ import (
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 )
 
-type Param struct{}
+type Param struct {
+	ConfigFilePath string
+	ConfigText     string
+}
 
 type Config struct {
 	Entries []*Entry
@@ -34,9 +37,9 @@ type GitHub interface {
 	ListItems(ctx context.Context, projectID string) ([]*github.Item, error)
 }
 
-func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, _ *Param) error {
+func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, param *Param) error {
 	cfg := &Config{}
-	if err := findAndReadConfig(fs, cfg); err != nil {
+	if err := findAndReadConfig(fs, cfg, param); err != nil {
 		return fmt.Errorf("find and read a configuration file: %w", err)
 	}
 	if err := cfg.Validate(); err != nil {

@@ -25,7 +25,14 @@ func (rc *addCommand) command() *cli.Command {
 $ ghproj add
 `,
 		Action: rc.action,
-		Flags:  []cli.Flag{},
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:    "config",
+				Aliases: []string{"c"},
+				Usage:   "configuration file path",
+				EnvVars: []string{"GHPROJ_CONFIG"},
+			},
+		},
 	}
 }
 
@@ -36,5 +43,7 @@ func (rc *addCommand) action(c *cli.Context) error {
 	log.SetColor(c.String("log-color"), logE)
 	gh := github.New(c.Context, os.Getenv("GITHUB_TOKEN"))
 	return add.Add(c.Context, logE, fs, gh, &add.Param{ //nolint:wrapcheck
+		ConfigFilePath: c.String("config"),
+		ConfigText:     os.Getenv("GHPROJ_CONFIG_TEXT"),
 	})
 }
