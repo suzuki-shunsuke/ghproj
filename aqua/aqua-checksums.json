@@ -186,8 +186,38 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.206.0/registry.yaml",
-      "checksum": "D615714ABA21820FB3AAB92EBA74EF01B66BCCC45540B6573E06571CD7501D7413466418760EA1650B1F9BAFCE404BE7695EBA3FE6B5A39B3BDE02620FEC6B33",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_darwin_amd64.tar.gz",
+      "checksum": "B21238839BE60725C2759F7DAAAB7D9225B12C63B8F2A89EE4E89BDAB6459249",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_darwin_arm64.tar.gz",
+      "checksum": "5CF9E82C1DF332430F45612CB68D7A020FD9D589258DF6857F71DF27CBFCECBA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_linux_amd64.tar.gz",
+      "checksum": "7CB009CB27E1CB490728E969CE164E6D92A5BA00A2EFE11C447F8C8ECDBFCC06",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_linux_arm64.tar.gz",
+      "checksum": "C1A5EE331EBF85B41399269A0874FEA4322EE6881B72C3CBA3AD5064B0381B75",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_windows_amd64.zip",
+      "checksum": "E83C8829665920088AE9FC3A070F80139964A8FE66E8B36D1E2A04F3EF90624D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.0/ghproj_windows_arm64.zip",
+      "checksum": "391D55B5626C649ED8F705C435D774F3DE2047DAD4D7C469FF0135DA1194161B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.207.0/registry.yaml",
+      "checksum": "8C38DE67C9549BF4C73A71E77C0121B840F244C2ECE85944FD4A3AF987B021304F445F39A71F53925C53A567892701A350D664F3E022FDDDA1F383971F12986A",
       "algorithm": "sha512"
     }
   ]
