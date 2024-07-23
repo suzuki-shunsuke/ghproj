@@ -55,6 +55,9 @@ ghproj add # Add issues and pull requests to GitHub Projects
 
 ## GitHub Access token
 
+ghproj needs a GitHub access token.
+You need to pass a token via environmenet variable `GITHUB_TOKEN`.
+
 There are two options.
 
 1. (Recommendation) If you use GitHub **Organization** Project, you can use a `GitHub App`
@@ -86,13 +89,15 @@ Installed repositories:
 
 Please install the GitHub App into only a repository where `ghproj` is executed via GitHub Actions.
 
+If you want to handle issues and pull requests of private repositories, permissions `Pull Requests: read-only` and  `Issues: read-only` are also necessary, and you need to install the GitHub App into repositories.
+
 ### 2. classic personal access token
 
 The scope `read:org` and `project` are required.
 
 ## Configuration
 
-ghproj.yaml
+`\.?ghproj\.yaml`
 
 e.g.
 
