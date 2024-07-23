@@ -185,6 +185,39 @@ entries:
 
 The workflow is executed periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), and issues and pull requests are added to the GitHub Project.
 
+## Comparison
+
+There are several other ways to add issues and pull requests to GitHub Projects.
+
+1. [built-in automation](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations)
+1. GitHub Actions' issues and pull requests events
+
+### 1. built-in automation
+
+Using built-in automation, you can add issues and pull requests to GitHub Projects wihout codes, but there are several drawback.
+
+1. You have to create a workflow per repository. This is bothersome
+
+![](https://storage.googleapis.com/zenn-user-upload/280cb65d9348-20240713.png)
+
+2. You can create only five (this limit seems to depend on the plan) workflows, which means you can handle issues and pull requests of only five repositories
+
+![](https://storage.googleapis.com/zenn-user-upload/64dcd54dc14a-20240713.png)
+
+### 2. GitHub Actions' issues and pull requests events
+
+You can run GitHub Actions workflows via issues and pull requests events and add them to GitHub Projects.
+
+https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions
+
+GitHub provides an official action for this.
+
+https://github.com/marketplace/actions/add-to-github-projects
+
+The drawback of this approach is that you have to add workflows to all repositories you want to handle.
+You have to maintain those workflows. This is bothersome.
+And you have to pass secrets to all workflow runs, which means you have to manage secrets properly.
+
 ## LICENSE
 
 [MIT](LICENSE)
