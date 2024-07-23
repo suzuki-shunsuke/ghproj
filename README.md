@@ -50,8 +50,14 @@ go install github.com/suzuki-shunsuke/ghproj/cmd/ghproj@latest
 
 ```sh
 ghproj init # Scaffold a configuration file ghproj.yaml
-ghproj add # Add issues and pull requests to GitHub Projects
+ghproj add [-config (-c) <configuration file path>] # Add issues and pull requests to GitHub Projects
 ```
+
+## Environment variables
+
+- `GITHUB_TOKEN`: (Required) GitHub access token
+- `GHPROJ_CONFIG`: Configuration file path
+- `GHPROJ_CONFIG_TEXT`: Configuraiton content. This is useful if you want to manage the configuration in a GitHub Actions Workflow file
 
 ## GitHub Access token
 
