@@ -60,6 +60,8 @@ There are two options.
 1. (Recommendation) If you use GitHub **Organization** Project, you can use a `GitHub App`
 1. If you use GitHub **User** Project, you can use a `classic personal access token`
 
+`GitHub App` is much safer than `classic personal access token`, so we recommend the option 1.
+
 GitHub Actions token is unavailable to manage GitHub Projects.
 
 fine-grained personal access token is unavailable because it doesn't support GitHub Projects.
