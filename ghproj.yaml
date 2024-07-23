@@ -30,7 +30,7 @@ entries:
   #     Item.Repo.IsFork ||
   #     (Item.Repo.Name startsWith "homebrew-") ||
   #     (Item.Repo.Name startsWith "test-")
-  - expr: |
-      ! Item.Open || Item.Repo.IsArchived
-    action: archive
-    project_id: PVT_kwHOAMtMJ84AQCf4
+  # - expr: |
+  #     Item.Repo.IsArchived
+  #   action: archive
+  #   project_id: PVT_kwHOAMtMJ84AQCf4

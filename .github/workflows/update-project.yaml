@@ -1,0 +1,38 @@
+---
+name: Update a GitHub Project
+on:
+  workflow_dispatch: {}
+  # schedule:
+  #   - cron: "*/10 * * * *"
+jobs:
+  update-project:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+        with:
+          aqua_version: v2.30.0
+        env:
+          GITHUB_TOKEN: ${{github.token}}
+      - run: ghproj -v
+        env:
+          GITHUB_TOKEN: ${{github.token}}
+      - run: ghproj add
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_PAT}}
+      - run: |
+          state=$(gh issue view "$ISSUE_NUMBER" --json state -q .state)
+          if [ "$state" = "CLOSED" ]; then
+            gh issue reopen "$ISSUE_NUMBER" -c "CI failed. $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          fi
+        if: failure()
+        env:
+          ISSUE_NUMBER: "24"
+          GITHUB_TOKEN: ${{github.token}}
+      - run: |
+          gh issue close "$ISSUE_NUMBER"
+        env:
+          ISSUE_NUMBER: "24"
+          GITHUB_TOKEN: ${{github.token}}
