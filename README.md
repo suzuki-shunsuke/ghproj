@@ -13,6 +13,7 @@ By executing this tool periodically by [GitHub Actions schedule event](https://d
 ## Blog Post
 
 - [Japanese](https://zenn.dev/shunsuke_suzuki/articles/add-github-issue-pr-to-project)
+- [English](https://dev.to/suzukishunsuke/pull-together-github-issues-and-pull-requests-across-repositories-to-github-projects-automatically-a87)
 
 ## Install
 
