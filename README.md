@@ -41,6 +41,76 @@ aqua g -i suzuki-shunsuke/ghproj
 
 4. Download a prebuilt binary from [GitHub Releases](https://github.com/suzuki-shunsuke/ghproj/releases) and install it into `$PATH`
 
+<details>
+<summary>Verify downloaded assets from GitHub Releases</summary>
+
+You can verify downloaded assets using some tools.
+
+1. [GitHub CLI](https://cli.github.com/)
+1. [slsa-verifier](https://github.com/slsa-framework/slsa-verifier)
+1. [Cosign](https://github.com/sigstore/cosign)
+
+--
+
+1. GitHub CLI
+
+ghproj >= v0.1.2
+
+You can install GitHub CLI by aqua.
+
+```sh
+aqua g -i cli/cli
+```
+
+```sh
+gh release download -R suzuki-shunsuke/ghproj v0.1.2 -p ghproj_darwin_arm64.tar.gz
+gh attestation verify ghproj_darwin_arm64.tar.gz \
+  -R suzuki-shunsuke/ghproj \
+  --signer-workflow suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
+```
+
+2. slsa-verifier
+
+You can install slsa-verifier by aqua.
+
+```sh
+aqua g -i slsa-framework/slsa-verifier
+```
+
+```sh
+gh release download -R suzuki-shunsuke/ghproj v0.1.2 -p ghproj_darwin_arm64.tar.gz  -p multiple.intoto.jsonl
+slsa-verifier verify-artifact ghproj_darwin_arm64.tar.gz \
+  --provenance-path multiple.intoto.jsonl \
+  --source-uri github.com/suzuki-shunsuke/ghproj \
+  --source-tag v0.1.2
+```
+
+3. Cosign
+
+You can install Cosign by aqua.
+
+```sh
+aqua g -i sigstore/cosign
+```
+
+```sh
+gh release download -R suzuki-shunsuke/ghproj v0.1.2
+cosign verify-blob \
+  --signature ghproj_0.1.2_checksums.txt.sig \
+  --certificate ghproj_0.1.2_checksums.txt.pem \
+  --certificate-identity-regexp 'https://github\.com/suzuki-shunsuke/go-release-workflow/\.github/workflows/release\.yaml@.*' \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  ghproj_0.1.2_checksums.txt
+```
+
+After verifying the checksum, verify the artifact.
+
+```sh
+cat ghproj_0.1.2_checksums.txt | sha256sum -c --ignore-missing
+```
+
+</details>
+
 5. Go
 
 ```sh
