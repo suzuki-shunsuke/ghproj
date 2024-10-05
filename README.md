@@ -69,11 +69,6 @@ gh attestation verify ghproj_darwin_arm64.tar.gz \
   --signer-workflow suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
 ```
 
-Output:
-
-```
-```
-
 2. slsa-verifier
 
 You can install slsa-verifier by aqua.
@@ -88,11 +83,6 @@ slsa-verifier verify-artifact ghproj_darwin_arm64.tar.gz \
   --provenance-path multiple.intoto.jsonl \
   --source-uri github.com/suzuki-shunsuke/ghproj \
   --source-tag v0.1.2
-```
-
-Output:
-
-```
 ```
 
 3. Cosign
@@ -111,12 +101,6 @@ cosign verify-blob \
   --certificate-identity-regexp 'https://github\.com/suzuki-shunsuke/go-release-workflow/\.github/workflows/release\.yaml@.*' \
   --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
   ghproj_0.1.2_checksums.txt
-```
-
-Output:
-
-```
-Verified OK
 ```
 
 After verifying the checksum, verify the artifact.
