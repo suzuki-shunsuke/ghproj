@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/suzuki-shunsuke/ghproj/pkg/controller/add/config",
+  "$ref": "#/$defs/Config",
+  "$defs": {
+    "Config": {
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/Entry"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "entries"
+      ]
+    },
+    "Entry": {
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "description": "GitHub Project id"
+        },
+        "action": {
+          "type": "string",
+          "description": "Set 'archive' if you want to archive items"
+        },
+        "query": {
+          "type": "string",
+          "description": "GitHub GraphQL Query to search issues and pull requests"
+        },
+        "expr": {
+          "type": "string",
+          "description": "An expression to filter the search result"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "project_id",
+        "query"
+      ]
+    }
+  }
+}
