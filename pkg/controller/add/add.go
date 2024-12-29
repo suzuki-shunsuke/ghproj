@@ -19,14 +19,14 @@ type Param struct {
 }
 
 type Config struct {
-	Entries []*Entry
+	Entries []*Entry `json:"entries"`
 }
 
 type Entry struct {
-	ProjectID string `yaml:"project_id"`
-	Action    string
-	Query     string
-	Expr      string
+	ProjectID string `json:"project_id" yaml:"project_id" jsonschema:"description=GitHub Project id"`
+	Action    string `json:"action,omitempty" jsonschema:"description=Set 'archive' if you want to archive items"`
+	Query     string `json:"query" jsonschema:"description=GitHub GraphQL Query to search issues and pull requests"`
+	Expr      string `json:"expr,omitempty" jsonschema:"description=An expression to filter the search result"`
 	exprProg  *vm.Program
 }
 
