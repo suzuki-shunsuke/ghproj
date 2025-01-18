@@ -1,27 +1,22 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/ghproj/refs/heads/main/json-schema/ghproj.json
 # ghproj https://github.com/suzuki-shunsuke/ghproj
 entries:
-  - user: suzuki-shunsuke
-    # type: issue, pr
-    # title
-    # label
-    # repository name
-    # repository properties
-    # state: open, closed
-    # merged: true/false
-    # datetime created, updated, closed, merged
-    # OR
+  - project_id: PVT_XXXXXXXXXXXXXXXX
     query: |
-      user:suzuki-shunsuke -label:renovate
-    project_number: 5
-    types:
-      - issue
-      - pr
-    repositories:
-      - foo
-    excluded_repositories:
-      - foo
-    excluded_labels:
-      - renovate
-  - org: aquaproj
-    project_number: 5
+      is:open
+      is:public
+      archived:false
+      -project:szksh-lab/1
+      owner:szksh-lab
+      owner:suzuki-shunsuke
+    expr: |
+      (! Item.Repo.IsFork) &&
+      (Item.Title != "Dependency Dashboard") &&
+      ! (Item.Repo.Name startsWith "homebrew-") &&
+      ! (Item.Repo.Name startsWith "test-")
+  # Archive items
+  - action: archive
+    project_id: PVT_XXXXXXXXXXXXXXXX
+    expr: |
+      Item.Repo.IsArchived
