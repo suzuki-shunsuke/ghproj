@@ -1,6 +1,6 @@
 # ghproj
 
-[Install](INSTALL.md)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/ghproj/main/LICENSE) | [Install](INSTALL.md)
 
 Add GitHub Issues and Pull Requests to GitHub Projects.
 
@@ -216,7 +216,3 @@ https://github.com/marketplace/actions/add-to-github-projects
 The drawback of this approach is that you have to add workflows to all repositories you want to handle.
 You have to maintain those workflows. This is bothersome.
 And you have to pass secrets to all workflow runs, which means you have to manage secrets properly.
-
-## LICENSE
-
-[MIT](LICENSE)
