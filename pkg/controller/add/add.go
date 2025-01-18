@@ -30,6 +30,10 @@ type Entry struct {
 	exprProg  *vm.Program
 }
 
+func (e *Entry) Archived() bool {
+	return e.Action == "archive"
+}
+
 type GitHub interface {
 	AddItemToProject(ctx context.Context, logE *logrus.Entry, input *github.InputAddItemToProject) error
 	ArchiveItem(ctx context.Context, logE *logrus.Entry, input *github.InputArchiveItem) error
@@ -54,7 +58,7 @@ func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, param 
 }
 
 func listItems(ctx context.Context, gh GitHub, entry *Entry) ([]*github.Item, error) {
-	if entry.Action == "archive" {
+	if entry.Archived() {
 		return gh.ListItems(ctx, entry.ProjectID) //nolint:wrapcheck
 	}
 	return gh.SearchItems(ctx, strings.ReplaceAll(entry.Query, "\n", " ")) //nolint:wrapcheck

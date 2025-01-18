@@ -1,6 +1,6 @@
 # ghproj
 
-[Install](INSTALL.md)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/ghproj/main/LICENSE) | [Install](INSTALL.md)
 
 Add GitHub Issues and Pull Requests to GitHub Projects.
 
@@ -95,7 +95,18 @@ entries:
     project_id: PVT_kwHOAMtMJ84AQCf4
 ```
 
-- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project
+- `entries`: The list of entries.
+
+Each entry has the following fields:
+
+- `project_id` (string, required): GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
+
+```sh
+gh project list
+```
+
+- `action`: For now, only `archive` is supported. If `action` is `archive`, the project items are archived. If `archive` is set, `query` is unavailable
+- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project. If `action` is `archive`, `query` is unavailable
 - `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
 
 `Item`:
@@ -110,12 +121,6 @@ entries:
     "IsFork": false
   }
 }
-```
-
-- `project_id`: GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
-
-```sh
-gh project list
 ```
 
 ## Archive items
@@ -211,7 +216,3 @@ https://github.com/marketplace/actions/add-to-github-projects
 The drawback of this approach is that you have to add workflows to all repositories you want to handle.
 You have to maintain those workflows. This is bothersome.
 And you have to pass secrets to all workflow runs, which means you have to manage secrets properly.
-
-## LICENSE
-
-[MIT](LICENSE)
