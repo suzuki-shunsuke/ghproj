@@ -25,7 +25,7 @@ type Config struct {
 type Entry struct {
 	ProjectID string `json:"project_id" yaml:"project_id" jsonschema:"description=GitHub Project id"`
 	Action    string `json:"action,omitempty" jsonschema:"description=Set 'archive' if you want to archive items"`
-	Query     string `json:"query" jsonschema:"description=GitHub GraphQL Query to search issues and pull requests"`
+	Query     string `json:"query,omitempty" jsonschema:"description=GitHub GraphQL Query to search issues and pull requests"`
 	Expr      string `json:"expr,omitempty" jsonschema:"description=An expression to filter the search result"`
 	exprProg  *vm.Program
 }
