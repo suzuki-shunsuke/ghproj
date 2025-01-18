@@ -95,7 +95,18 @@ entries:
     project_id: PVT_kwHOAMtMJ84AQCf4
 ```
 
-- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project
+- `entries`: The list of entries.
+
+Each entry has the following fields:
+
+- `project_id` (string, required): GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
+
+```sh
+gh project list
+```
+
+- `action`: For now, only `archive` is supported. If `action` is `archive`, the project items are archived. If `archive` is set, `query` is unavailable
+- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project. If `action` is `archive`, `query` is unavailable
 - `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
 
 `Item`:
@@ -110,12 +121,6 @@ entries:
     "IsFork": false
   }
 }
-```
-
-- `project_id`: GitHub Project id which issues and pull requests are added. You can get your project id using GitHub CLI `gh project list`
-
-```sh
-gh project list
 ```
 
 ## Archive items
