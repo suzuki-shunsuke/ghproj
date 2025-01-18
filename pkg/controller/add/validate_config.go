@@ -1,6 +1,7 @@
 package add
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/expr-lang/expr"
@@ -8,14 +9,19 @@ import (
 
 func (c *Config) Validate() error {
 	for _, entry := range c.Entries {
-		if entry.Expr == "" {
-			continue
+		if entry.ProjectID == "" {
+			return errors.New("entry's project_id is required")
 		}
-		prog, err := expr.Compile(entry.Expr, expr.AsBool())
-		if err != nil {
-			return fmt.Errorf("compile an expression: %w", err)
+		if entry.Archived() && entry.Query != "" {
+			return errors.New("entry's query must be empty if it's action is 'archive'")
 		}
-		entry.exprProg = prog
+		if entry.Expr != "" {
+			prog, err := expr.Compile(entry.Expr, expr.AsBool())
+			if err != nil {
+				return fmt.Errorf("compile an expression: %w", err)
+			}
+			entry.exprProg = prog
+		}
 	}
 	return nil
 }
