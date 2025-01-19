@@ -17,9 +17,8 @@ type addCommand struct {
 
 func (rc *addCommand) command() *cli.Command {
 	return &cli.Command{
-		Name:      "add",
-		Usage:     "Add GitHub Issues and Pull Requests to GitHub Projects",
-		UsageText: "ghproj set",
+		Name:  "add",
+		Usage: "Add GitHub Issues and Pull Requests to GitHub Projects",
 		Description: `Add GitHub Issues and Pull Requests to GitHub Projects.
 
 $ ghproj add
