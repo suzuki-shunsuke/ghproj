@@ -106,7 +106,9 @@ gh project list
 ```
 
 - `action`: For now, only `archive` is supported. If `action` is `archive`, the project items are archived. If `archive` is set, `query` is unavailable
-- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project. If `action` is `archive`, `query` is unavailable
+- `query`: A query to search issues and pull requests which are added to a GitHub Project.
+  If `action` is `archive`, `query` is unavailable.
+  [`query` is used as GitHub GraphQL API's `search` query's `query` argument](https://docs.github.com/en/graphql/reference/queries#search)
 - `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
 
 `Item`:
