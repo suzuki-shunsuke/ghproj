@@ -129,9 +129,7 @@ gh project list
 
 You can archive items by `ghproj add` command.
 
-```sh
-ghproj add
-```
+1. Add an entry with `action: archive`
 
 ghproj.yaml
 
@@ -142,6 +140,27 @@ entries:
     action: archive
     project_id: PVT_kwHOAMtMJ84AQCf4
 ```
+
+2. Run `ghproj add`
+
+```sh
+ghproj add
+```
+
+Unfortunately, GitHub GraphQL API doesn't support searching items using query.
+So the setting `query` is unavailable.
+Instead, ghproj lists all items in a given project and filters them by an expression written in [expr](https://github.com/expr-lang/expr).
+The expression is evaluated by item, and the item is archived if the evaluation result is `true`.
+
+e.g. Archive items if repositories are archived:
+
+```yaml
+  - expr: |
+      Item.Repo.IsArchived
+```
+
+If `expr` isn't set, all items are archived.
+In the expression, a variable `Item` is available.
 
 `Item`:
 
