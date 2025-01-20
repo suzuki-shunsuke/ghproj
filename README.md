@@ -106,7 +106,9 @@ gh project list
 ```
 
 - `action`: For now, only `archive` is supported. If `action` is `archive`, the project items are archived. If `archive` is set, `query` is unavailable
-- `query`: GitHub GraphQL Query to search issues and pull requests which are added to a GitHub Project. If `action` is `archive`, `query` is unavailable
+- `query`: A query to search issues and pull requests which are added to a GitHub Project.
+  If `action` is `archive`, `query` is unavailable.
+  [`query` is used as GitHub GraphQL API's `search` query's `query` argument](https://docs.github.com/en/graphql/reference/queries#search)
 - `expr`: An expression to filter the search result. [expr-lang/expr](https://github.com/expr-lang/expr) is used. The expression is evaluated per item. The evaluation result must be a boolean. If the result is `false`, the item is excluded. `expr` is optional
 
 `Item`:
@@ -127,9 +129,7 @@ gh project list
 
 You can archive items by `ghproj add` command.
 
-```sh
-ghproj add
-```
+1. Add an entry with `action: archive`
 
 ghproj.yaml
 
@@ -140,6 +140,27 @@ entries:
     action: archive
     project_id: PVT_kwHOAMtMJ84AQCf4
 ```
+
+2. Run `ghproj add`
+
+```sh
+ghproj add
+```
+
+Unfortunately, GitHub GraphQL API doesn't support searching items using query.
+So the setting `query` is unavailable.
+Instead, ghproj lists all items in a given project and filters them by an expression written in [expr](https://github.com/expr-lang/expr).
+The expression is evaluated by item, and the item is archived if the evaluation result is `true`.
+
+e.g. Archive items if repositories are archived:
+
+```yaml
+  - expr: |
+      Item.Repo.IsArchived
+```
+
+If `expr` isn't set, all items are archived.
+In the expression, a variable `Item` is available.
 
 `Item`:
 
