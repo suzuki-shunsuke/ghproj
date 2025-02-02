@@ -237,4 +237,3 @@ https://github.com/marketplace/actions/add-to-github-projects
 The drawback of this approach is that you have to add workflows to all repositories you want to handle.
 You have to maintain those workflows. This is bothersome.
 And you have to pass secrets to all workflow runs, which means you have to manage secrets properly.
-

@@ -3,6 +3,7 @@ module github.com/suzuki-shunsuke/ghproj
 go 1.23.4
 
 require (
+	github.com/expr-lang/expr v1.16.9
 	github.com/mattn/go-colorable v0.1.14
 	github.com/shurcooL/githubv4 v0.0.0-20240429030203-be2daab69064
 	github.com/sirupsen/logrus v1.9.3

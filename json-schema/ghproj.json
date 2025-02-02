@@ -6,6 +6,9 @@
     "Config": {
       "properties": {
         "entries": {
+          "items": {
+            "$ref": "#/$defs/Entry"
+          },
           "type": "array"
         }
       },
@@ -37,8 +40,7 @@
       "additionalProperties": false,
       "type": "object",
       "required": [
-        "project_id",
-        "query"
+        "project_id"
       ]
     }
   }
