@@ -26,9 +26,7 @@ jobs:
     if: failure()
     needs:
       - renovate-config-validator
-      - update-aqua-checksums
       - test
-      - go-mod-tidy
 
   renovate-config-validator:
     uses: ./.github/workflows/wc-renovate-config-validator.yaml
