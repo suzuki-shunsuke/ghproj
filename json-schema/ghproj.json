@@ -6,9 +6,6 @@
     "Config": {
       "properties": {
         "entries": {
-          "items": {
-            "$ref": "#/$defs/Entry"
-          },
           "type": "array"
         }
       },
