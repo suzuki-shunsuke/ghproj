@@ -1,6 +1,6 @@
 # ghproj
 
-[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/ghproj/main/LICENSE) | [Install](INSTALL.md)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/ghproj/main/LICENSE) | [Install](INSTALL.md) | [Usage](USAGE.md)
 
 Add GitHub Issues and Pull Requests to GitHub Projects.
 
@@ -16,13 +16,6 @@ By executing this tool periodically by [GitHub Actions schedule event](https://d
 
 - [Japanese](https://zenn.dev/shunsuke_suzuki/articles/add-github-issue-pr-to-project)
 - [English](https://dev.to/suzukishunsuke/pull-together-github-issues-and-pull-requests-across-repositories-to-github-projects-automatically-a87)
-
-## Usage
-
-```sh
-ghproj init # Scaffold a configuration file ghproj.yaml
-ghproj add [-config (-c) <configuration file path>] # Add issues and pull requests to GitHub Projects
-```
 
 ## Environment variables
 
