@@ -20,4 +20,3 @@ jobs:
       - autofix
     steps:
       - run: exit 1
-
