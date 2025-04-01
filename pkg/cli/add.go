@@ -8,7 +8,7 @@ import (
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 	"github.com/suzuki-shunsuke/ghproj/pkg/log"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type addCommand struct {
