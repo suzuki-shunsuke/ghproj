@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -40,8 +41,8 @@ func (rc *addCommand) action(ctx context.Context, c *cli.Command) error {
 	logE := rc.logE
 	log.SetLevel(c.String("log-level"), logE)
 	log.SetColor(c.String("log-color"), logE)
-	gh := github.New(c.Context, os.Getenv("GITHUB_TOKEN"))
-	return add.Add(c.Context, logE, fs, gh, &add.Param{ //nolint:wrapcheck
+	gh := github.New(ctx, os.Getenv("GITHUB_TOKEN"))
+	return add.Add(ctx, logE, fs, gh, &add.Param{ //nolint:wrapcheck
 		ConfigFilePath: c.String("config"),
 		ConfigText:     os.Getenv("GHPROJ_CONFIG_TEXT"),
 	})

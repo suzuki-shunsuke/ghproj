@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"context"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/initcmd"
@@ -32,5 +34,5 @@ func (rc *initCommand) action(ctx context.Context, c *cli.Command) error {
 	log.SetLevel(c.String("log-level"), logE)
 	log.SetColor(c.String("log-color"), logE)
 	ctrl := initcmd.NewController(fs)
-	return ctrl.Init(c.Context, logE) //nolint:wrapcheck
+	return ctrl.Init(ctx, logE) //nolint:wrapcheck
 }

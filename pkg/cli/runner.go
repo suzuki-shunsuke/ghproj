@@ -3,10 +3,9 @@ package cli
 import (
 	"context"
 	"io"
-	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/suzuki-shunsuke/urfave-cli-help-all/helpall"
+	"github.com/suzuki-shunsuke/urfave-cli-v3-help-all/helpall"
 	"github.com/urfave/cli/v3"
 )
 
@@ -25,15 +24,10 @@ type LDFlags struct {
 }
 
 func (r *Runner) Run(ctx context.Context, args ...string) error {
-	compiledDate, err := time.Parse(time.RFC3339, r.LDFlags.Date)
-	if err != nil {
-		compiledDate = time.Now()
-	}
-	app := cli.Command{
-		Name:     "ghproj",
-		Usage:    "",
-		Version:  r.LDFlags.Version + " (" + r.LDFlags.Commit + ")",
-		Compiled: compiledDate,
+	cmd := helpall.With(&cli.Command{
+		Name:    "ghproj",
+		Usage:   "",
+		Version: r.LDFlags.Version + " (" + r.LDFlags.Commit + ")",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "log-level",
@@ -57,9 +51,8 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 				stdout: r.Stdout,
 			}).command(),
 			(&versionCommand{}).command(),
-			helpall.New(nil),
 		},
-	}
+	}, nil)
 
-	return app.Run(ctx, args) //nolint:wrapcheck
+	return cmd.Run(ctx, args) //nolint:wrapcheck
 }
