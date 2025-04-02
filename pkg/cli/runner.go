@@ -7,7 +7,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/suzuki-shunsuke/urfave-cli-help-all/helpall"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type Runner struct {
@@ -29,7 +29,7 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 	if err != nil {
 		compiledDate = time.Now()
 	}
-	app := cli.App{
+	app := cli.Command{
 		Name:     "ghproj",
 		Usage:    "",
 		Version:  r.LDFlags.Version + " (" + r.LDFlags.Commit + ")",
@@ -44,7 +44,7 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 				Usage: "Log color. One of 'auto' (default), 'always', 'never'",
 			},
 		},
-		EnableBashCompletion: true,
+		EnableShellCompletion: true,
 		Commands: []*cli.Command{
 			(&initCommand{
 				logE: r.LogE,
@@ -61,5 +61,5 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 		},
 	}
 
-	return app.RunContext(ctx, args) //nolint:wrapcheck
+	return app.Run(ctx, args) //nolint:wrapcheck
 }
