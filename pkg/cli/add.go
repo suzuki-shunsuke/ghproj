@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -8,7 +9,7 @@ import (
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 	"github.com/suzuki-shunsuke/ghproj/pkg/log"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type addCommand struct {
@@ -29,19 +30,19 @@ $ ghproj add
 				Name:    "config",
 				Aliases: []string{"c"},
 				Usage:   "configuration file path",
-				EnvVars: []string{"GHPROJ_CONFIG"},
+				Sources: cli.EnvVars("GHPROJ_CONFIG"),
 			},
 		},
 	}
 }
 
-func (rc *addCommand) action(c *cli.Context) error {
+func (rc *addCommand) action(ctx context.Context, c *cli.Command) error {
 	fs := afero.NewOsFs()
 	logE := rc.logE
 	log.SetLevel(c.String("log-level"), logE)
 	log.SetColor(c.String("log-color"), logE)
-	gh := github.New(c.Context, os.Getenv("GITHUB_TOKEN"))
-	return add.Add(c.Context, logE, fs, gh, &add.Param{ //nolint:wrapcheck
+	gh := github.New(ctx, os.Getenv("GITHUB_TOKEN"))
+	return add.Add(ctx, logE, fs, gh, &add.Param{ //nolint:wrapcheck
 		ConfigFilePath: c.String("config"),
 		ConfigText:     os.Getenv("GHPROJ_CONFIG_TEXT"),
 	})
