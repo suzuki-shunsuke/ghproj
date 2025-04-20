@@ -7,15 +7,11 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-type Runner struct {
-	Runner *urfave.Runner
-}
-
-func (r *Runner) Run(ctx context.Context, args ...string) error {
-	return r.Runner.Command(&cli.Command{ //nolint:wrapcheck
+func Run(ctx context.Context, runner *urfave.Runner, args ...string) error {
+	return runner.Command(&cli.Command{ //nolint:wrapcheck
 		Name:    "ghproj",
 		Usage:   "",
-		Version: r.Runner.LDFlags.Version,
+		Version: runner.LDFlags.Version,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "log-level",
@@ -29,14 +25,14 @@ func (r *Runner) Run(ctx context.Context, args ...string) error {
 		EnableShellCompletion: true,
 		Commands: []*cli.Command{
 			(&initCommand{
-				logE: r.Runner.LogE,
+				logE: runner.LogE,
 			}).command(),
 			(&addCommand{
-				logE: r.Runner.LogE,
+				logE: runner.LogE,
 			}).command(),
 			(&completionCommand{
-				logE:   r.Runner.LogE,
-				stdout: r.Runner.Stdout,
+				logE:   runner.LogE,
+				stdout: runner.Stdout,
 			}).command(),
 		},
 	}).Run(ctx, args)

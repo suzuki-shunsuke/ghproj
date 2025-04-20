@@ -27,20 +27,17 @@ func main() {
 }
 
 func core(logE *logrus.Entry) error {
-	runner := &cli.Runner{
-		Runner: &urfave.Runner{
-			Stdin:  os.Stdin,
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
-			LDFlags: &urfave.LDFlags{
-				Version: version,
-				Commit:  commit,
-				Date:    date,
-			},
-			LogE: logE,
-		},
-	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	return runner.Run(ctx, os.Args...) //nolint:wrapcheck
+	return cli.Run(ctx, &urfave.Runner{ //nolint:wrapcheck
+		Stdin:  os.Stdin,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+		LDFlags: &urfave.LDFlags{
+			Version: version,
+			Commit:  commit,
+			Date:    date,
+		},
+		LogE: logE,
+	}, os.Args...)
 }
