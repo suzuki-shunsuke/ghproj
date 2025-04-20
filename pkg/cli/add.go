@@ -2,13 +2,14 @@ package cli
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
-	"github.com/suzuki-shunsuke/ghproj/pkg/log"
+	"github.com/suzuki-shunsuke/urfave-cli-v3-util/log"
 	"github.com/urfave/cli/v3"
 )
 
@@ -39,8 +40,9 @@ $ ghproj add
 func (rc *addCommand) action(ctx context.Context, c *cli.Command) error {
 	fs := afero.NewOsFs()
 	logE := rc.logE
-	log.SetLevel(c.String("log-level"), logE)
-	log.SetColor(c.String("log-color"), logE)
+	if err := log.Set(logE, c.String("log-level"), c.String("log-color")); err != nil {
+		return fmt.Errorf("configure logger: %w", err)
+	}
 	gh := github.New(ctx, os.Getenv("GITHUB_TOKEN"))
 	return add.Add(ctx, logE, fs, gh, &add.Param{ //nolint:wrapcheck
 		ConfigFilePath: c.String("config"),
