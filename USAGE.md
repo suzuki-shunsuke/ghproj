@@ -11,7 +11,7 @@ USAGE:
    ghproj [global options] [command [command options]]
 
 VERSION:
-   0.1.6 (d242e00579cbf3c52ea026fff191903c61b1d3c8)
+   0.1.7
 
 COMMANDS:
    init        Scaffold a configuration file
@@ -19,6 +19,7 @@ COMMANDS:
    completion  Output shell completion script for bash, zsh, or fish
    version     Show version
    help, h     Shows a list of commands or help for one command
+   completion  Output shell completion script for bash, zsh, fish, or Powershell
 
 GLOBAL OPTIONS:
    --log-level string  log level
@@ -76,7 +77,7 @@ NAME:
    ghproj completion - Output shell completion script for bash, zsh, or fish
 
 USAGE:
-   ghproj completion [command [command options]] 
+   ghproj completion [command [command options]]
 
 DESCRIPTION:
    Output shell completion script for bash, zsh, or fish.
@@ -160,5 +161,43 @@ USAGE:
 
 OPTIONS:
    --json, -j  Output version in JSON format (default: false)
+   --help, -h  show help
+```
+
+## ghproj completion
+
+```console
+$ ghproj completion --help
+NAME:
+   ghproj completion - Output shell completion script for bash, zsh, or fish
+
+USAGE:
+   ghproj completion [command [command options]]
+
+DESCRIPTION:
+   Output shell completion script for bash, zsh, or fish.
+   Source the output to enable completion.
+
+   e.g.
+
+   .bash_profile
+
+   source <(ghproj completion bash)
+
+   .zprofile
+
+   source <(ghproj completion zsh)
+
+   fish
+
+   ghproj completion fish > ~/.config/fish/completions/ghproj.fish
+
+
+COMMANDS:
+   bash  Output shell completion script for bash
+   zsh   Output shell completion script for zsh
+   fish  Output shell completion script for fish
+
+OPTIONS:
    --help, -h  show help
 ```
