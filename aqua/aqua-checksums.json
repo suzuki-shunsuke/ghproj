@@ -196,33 +196,33 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_darwin_amd64.tar.gz",
-      "checksum": "DCB61F362428813D19BAB917D9899A036B1097648A21B5469BB749A0ABCEEB88",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_darwin_amd64.tar.gz",
+      "checksum": "08D9FAA280D167C1AFE4F2149D7DE7EF6FA686B2D4677C290B97AEE4507E6DE1",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_darwin_arm64.tar.gz",
-      "checksum": "942F021577DB41300EB261495F4F955E0E9F25F74E3717417DCA8FE8F9453EB6",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_darwin_arm64.tar.gz",
+      "checksum": "6E6E93299D0122A7A1F68B5B6327B970052FDB51A9037A59B1FD5D0132926D77",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_linux_amd64.tar.gz",
-      "checksum": "206EB302ED2C46BE1847DCF061A4B97634900455951C8D78349B27FEEEDAED4A",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_linux_amd64.tar.gz",
+      "checksum": "529DE8CAFF226B70F5E6C3429DCCABCCA95433A84448FA46DAF5CA87020FA0AA",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_linux_arm64.tar.gz",
-      "checksum": "C2BE46204C240A8578055A396AF2875A909006391B9521310A67A6DAB16946F9",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_linux_arm64.tar.gz",
+      "checksum": "9D97CEC840DFDF03A5EA503865B4EB5F45DA11235180379E3110BA2B70A22595",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_windows_amd64.zip",
-      "checksum": "41F3C68E2AC2967771B132E4B67EBB73A09BCD9CA47E8C9DE50A5B8174392C5F",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_windows_amd64.zip",
+      "checksum": "C335AF1D561C9E6DA64451C230C28C2AEC908A0D636772BFAB0F2A52358AF161",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.7/ghproj_windows_arm64.zip",
-      "checksum": "B079E8D03E1B2934E688B3ECB07977C2FDFE233E24477AEB3EC658FCF2358E72",
+      "id": "github_release/github.com/suzuki-shunsuke/ghproj/v0.1.8/ghproj_windows_arm64.zip",
+      "checksum": "376B6BF78767F8D093A846CA4B5905D89F52F6823C42E54D3C7541FDB2B99210",
       "algorithm": "sha256"
     },
     {

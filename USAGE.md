@@ -11,7 +11,7 @@ USAGE:
    ghproj [global options] [command [command options]]
 
 VERSION:
-   0.1.7
+   0.1.8
 
 COMMANDS:
    init        Scaffold a configuration file
