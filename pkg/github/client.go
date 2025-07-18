@@ -18,8 +18,8 @@ func New(ctx context.Context, token string) *Client {
 	))
 
 	var v4Client *githubv4.Client
-	if ghHost := os.Getenv("GH_HOST"); ghHost != "" {
-		v4Client = githubv4.NewEnterpriseClient(ghHost, httpClient)
+	if url := os.Getenv("GITHUB_GRAPHQL_URL"); url != "" {
+		v4Client = githubv4.NewEnterpriseClient(url, httpClient)
 	} else {
 		v4Client = githubv4.NewClient(httpClient)
 	}
