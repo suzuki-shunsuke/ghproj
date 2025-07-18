@@ -22,7 +22,7 @@ By executing this tool periodically by [GitHub Actions schedule event](https://d
 - `GITHUB_TOKEN`: (Required) GitHub access token
 - `GHPROJ_CONFIG`: Configuration file path
 - `GHPROJ_CONFIG_TEXT`: Configuraiton content. This is useful if you want to manage the configuration in a GitHub Actions Workflow file
-- `GITHUB_GRAPHQL_URL`: (Optional) GitHub Enterprise Server GraphQL API URL. If not set, GitHub.com will be used. Example: `https://github.company.com/api/graphql`
+- `GITHUB_GRAPHQL_URL`: GraphQL API URL. Defaults to GitHub.com. Set this to use a different GitHub instance. Example: `https://github.company.com/api/graphql`
 
 ## GitHub Access token
 
