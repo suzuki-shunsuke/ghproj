@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"os"
 
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
@@ -16,7 +17,14 @@ func New(ctx context.Context, token string) *Client {
 		&oauth2.Token{AccessToken: token},
 	))
 
+	var v4Client *githubv4.Client
+	if ghHost := os.Getenv("GH_HOST"); ghHost != "" {
+		v4Client = githubv4.NewEnterpriseClient(ghHost, httpClient)
+	} else {
+		v4Client = githubv4.NewClient(httpClient)
+	}
+
 	return &Client{
-		v4Client: githubv4.NewClient(httpClient),
+		v4Client: v4Client,
 	}
 }

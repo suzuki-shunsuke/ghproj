@@ -22,6 +22,7 @@ By executing this tool periodically by [GitHub Actions schedule event](https://d
 - `GITHUB_TOKEN`: (Required) GitHub access token
 - `GHPROJ_CONFIG`: Configuration file path
 - `GHPROJ_CONFIG_TEXT`: Configuraiton content. This is useful if you want to manage the configuration in a GitHub Actions Workflow file
+- `GH_HOST`: GitHub Enterprise Server hostname. If not set, GitHub.com will be used. Example: `https://github.company.com/api/graphql`
 
 ## GitHub Access token
 
