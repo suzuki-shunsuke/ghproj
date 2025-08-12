@@ -3,7 +3,7 @@ module github.com/suzuki-shunsuke/ghproj
 go 1.24.5
 
 require (
-	github.com/expr-lang/expr v1.17.5
+	github.com/expr-lang/expr v1.17.6
 	github.com/shurcooL/githubv4 v0.0.0-20240429030203-be2daab69064
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/afero v1.14.0
