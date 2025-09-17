@@ -2,16 +2,19 @@ package cli
 
 import (
 	"context"
+	"os"
 
+	"github.com/sirupsen/logrus"
+	"github.com/suzuki-shunsuke/go-stdutil"
 	"github.com/suzuki-shunsuke/urfave-cli-v3-util/urfave"
 	"github.com/urfave/cli/v3"
 )
 
-func Run(ctx context.Context, runner *urfave.Runner, args ...string) error {
-	return runner.Command(&cli.Command{ //nolint:wrapcheck
+func Run(ctx context.Context, logE *logrus.Entry, ldFlags *stdutil.LDFlags, args ...string) error {
+	return urfave.Command(ldFlags, &cli.Command{ //nolint:wrapcheck
 		Name:    "ghproj",
 		Usage:   "",
-		Version: runner.LDFlags.Version,
+		Version: ldFlags.Version,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "log-level",
@@ -25,14 +28,14 @@ func Run(ctx context.Context, runner *urfave.Runner, args ...string) error {
 		EnableShellCompletion: true,
 		Commands: []*cli.Command{
 			(&initCommand{
-				logE: runner.LogE,
+				logE: logE,
 			}).command(),
 			(&addCommand{
-				logE: runner.LogE,
+				logE: logE,
 			}).command(),
 			(&completionCommand{
-				logE:   runner.LogE,
-				stdout: runner.Stdout,
+				logE:   logE,
+				stdout: os.Stdout,
 			}).command(),
 		},
 	}).Run(ctx, args)

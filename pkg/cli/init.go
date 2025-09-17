@@ -7,7 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/initcmd"
-	"github.com/suzuki-shunsuke/urfave-cli-v3-util/log"
+	"github.com/suzuki-shunsuke/logrus-util/log"
 	"github.com/urfave/cli/v3"
 )
 
