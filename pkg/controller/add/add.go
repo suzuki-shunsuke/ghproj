@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"strings"
 
 	"github.com/expr-lang/expr"
 	"github.com/expr-lang/expr/vm"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 )
@@ -35,13 +35,13 @@ func (e *Entry) Archived() bool {
 }
 
 type GitHub interface {
-	AddItemToProject(ctx context.Context, logE *logrus.Entry, input *github.InputAddItemToProject) error
-	ArchiveItem(ctx context.Context, logE *logrus.Entry, input *github.InputArchiveItem) error
+	AddItemToProject(ctx context.Context, logger *slog.Logger, input *github.InputAddItemToProject) error
+	ArchiveItem(ctx context.Context, logger *slog.Logger, input *github.InputArchiveItem) error
 	SearchItems(ctx context.Context, query string) ([]*github.Item, error)
 	ListItems(ctx context.Context, projectID string) ([]*github.Item, error)
 }
 
-func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, param *Param) error {
+func Add(ctx context.Context, logger *slog.Logger, fs afero.Fs, gh GitHub, param *Param) error {
 	cfg := &Config{}
 	if err := findAndReadConfig(fs, cfg, param); err != nil {
 		return fmt.Errorf("find and read a configuration file: %w", err)
@@ -50,7 +50,7 @@ func Add(ctx context.Context, logE *logrus.Entry, fs afero.Fs, gh GitHub, param 
 		return fmt.Errorf("validate a configuration file: %w", err)
 	}
 	for _, entry := range cfg.Entries {
-		if err := handleEntry(ctx, logE, gh, cfg, entry); err != nil {
+		if err := handleEntry(ctx, logger, gh, cfg, entry); err != nil {
 			return fmt.Errorf("handle an entry: %w", err)
 		}
 	}
@@ -64,15 +64,13 @@ func listItems(ctx context.Context, gh GitHub, entry *Entry) ([]*github.Item, er
 	return gh.SearchItems(ctx, strings.ReplaceAll(entry.Query, "\n", " ")) //nolint:wrapcheck
 }
 
-func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, entry *Entry) error {
+func handleEntry(ctx context.Context, logger *slog.Logger, gh GitHub, _ *Config, entry *Entry) error {
 	// Search GitHub Issues and Pull Requests
 	items, err := listItems(ctx, gh, entry)
 	if err != nil {
 		return fmt.Errorf("search GitHub Issues and Pull Requests: %w", err)
 	}
-	logE.WithFields(logrus.Fields{
-		"number_of_items": len(items),
-	}).Info("search issues and pull requests")
+	logger.Info("search issues and pull requests", "number_of_items", len(items))
 	// Add issues and pull requests to GitHub Projects
 	for _, item := range items {
 		// Exclude issues and pull requests based on the configuration
@@ -83,14 +81,14 @@ func handleEntry(ctx context.Context, logE *logrus.Entry, gh GitHub, _ *Config, 
 		}
 		switch entry.Action {
 		case "archive":
-			if err := gh.ArchiveItem(ctx, logE, &github.InputArchiveItem{
+			if err := gh.ArchiveItem(ctx, logger, &github.InputArchiveItem{
 				ProjectID: entry.ProjectID,
 				ItemID:    item.ID,
 			}); err != nil {
 				return fmt.Errorf("archive an item: %w", err)
 			}
 		case "", "add":
-			if err := gh.AddItemToProject(ctx, logE, &github.InputAddItemToProject{
+			if err := gh.AddItemToProject(ctx, logger, &github.InputAddItemToProject{
 				ProjectID: entry.ProjectID,
 				ContentID: item.ID,
 			}); err != nil {

@@ -3,18 +3,19 @@ package cli
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"os"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
-	"github.com/suzuki-shunsuke/logrus-util/log"
+	"github.com/suzuki-shunsuke/slog-util/slogutil"
 	"github.com/urfave/cli/v3"
 )
 
 type addCommand struct {
-	logE *logrus.Entry
+	logger      *slog.Logger
+	logLevelVar *slog.LevelVar
 }
 
 func (rc *addCommand) command() *cli.Command {
@@ -39,12 +40,12 @@ $ ghproj add
 
 func (rc *addCommand) action(ctx context.Context, c *cli.Command) error {
 	fs := afero.NewOsFs()
-	logE := rc.logE
-	if err := log.Set(logE, c.String("log-level"), c.String("log-color")); err != nil {
-		return fmt.Errorf("configure logger: %w", err)
+	logger := rc.logger
+	if err := slogutil.SetLevel(rc.logLevelVar, c.String("log-level")); err != nil {
+		return fmt.Errorf("set log level: %w", err)
 	}
 	gh := github.New(ctx, os.Getenv("GITHUB_TOKEN"))
-	return add.Add(ctx, logE, fs, gh, &add.Param{ //nolint:wrapcheck
+	return add.Add(ctx, logger, fs, gh, &add.Param{ //nolint:wrapcheck
 		ConfigFilePath: c.String("config"),
 		ConfigText:     os.Getenv("GHPROJ_CONFIG_TEXT"),
 	})

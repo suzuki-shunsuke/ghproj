@@ -3,9 +3,9 @@ package github
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/shurcooL/githubv4"
-	"github.com/sirupsen/logrus"
 )
 
 type InputArchiveItem struct {
@@ -13,16 +13,13 @@ type InputArchiveItem struct {
 	ProjectID string
 }
 
-func (c *Client) ArchiveItem(ctx context.Context, logE *logrus.Entry, input *InputArchiveItem) error {
+func (c *Client) ArchiveItem(ctx context.Context, logger *slog.Logger, input *InputArchiveItem) error {
 	var m struct {
 		ArchiveProjectItem struct {
 			ProjectV2Item ProjectItem `graphql:"item"`
 		} `graphql:"archiveProjectV2Item(input:$input)"`
 	}
-	logE.WithFields(logrus.Fields{
-		"project_id": input.ProjectID,
-		"item_id":    input.ItemID,
-	}).Info("archiving a GitHub Project item")
+	logger.Info("archiving a GitHub Project item", "project_id", input.ProjectID, "item_id", input.ItemID)
 	if err := c.v4Client.Mutate(ctx, &m, githubv4.ArchiveProjectV2ItemInput{
 		ProjectID: input.ProjectID,
 		ItemID:    input.ItemID,
