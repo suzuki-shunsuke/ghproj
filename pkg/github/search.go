@@ -47,7 +47,7 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 			}
 		} `graphql:"search(first: 100, query: $searchQuery, type: $searchType, after: $cursor)"`
 	}
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"searchQuery": githubv4.String(query),
 		"searchType":  githubv4.SearchTypeIssue,
 		"cursor":      (*githubv4.String)(nil),

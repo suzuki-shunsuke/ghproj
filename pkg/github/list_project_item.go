@@ -131,7 +131,7 @@ func (c *Client) ListItems(ctx context.Context, projectID string) ([]*Item, erro
 			} `graphql:"... on ProjectV2"`
 		} `graphql:"node(id: $id)"`
 	}
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"id":     githubv4.ID(projectID),
 		"cursor": (*githubv4.String)(nil),
 	}
