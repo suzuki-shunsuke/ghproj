@@ -5,13 +5,13 @@
 ```console
 $ ghproj --help
 NAME:
-   ghproj - A new cli application
+   ghproj - Add GitHub Issues and Pull Requests to GitHub Projects
 
 USAGE:
    ghproj [global options] [command [command options]]
 
 VERSION:
-   0.1.9
+   1.0.0
 
 COMMANDS:
    init        Scaffold a configuration file
@@ -23,7 +23,6 @@ COMMANDS:
 
 GLOBAL OPTIONS:
    --log-level string  log level
-   --log-color string  Log color. One of 'auto' (default), 'always', 'never'
    --help, -h          show help
    --version, -v       print the version
 ```
@@ -160,7 +159,7 @@ USAGE:
    ghproj version
 
 OPTIONS:
-   --json, -j  Output version in JSON format (default: false)
+   --json, -j  Output version in JSON format
    --help, -h  show help
 ```
 
