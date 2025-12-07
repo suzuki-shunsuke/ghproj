@@ -7,13 +7,12 @@ import (
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/initcmd"
 	"github.com/suzuki-shunsuke/slog-util/slogutil"
-	"github.com/suzuki-shunsuke/urfave-cli-v3-util/urfave"
 	"github.com/urfave/cli/v3"
 )
 
 type initCommand struct{}
 
-func (rc *initCommand) command(logger *slogutil.Logger) *cli.Command {
+func (rc *initCommand) command(logger *slogutil.Logger, globalFlags *GlobalFlags) *cli.Command {
 	return &cli.Command{
 		Name:      "init",
 		Usage:     "Scaffold a configuration file",
@@ -22,14 +21,15 @@ func (rc *initCommand) command(logger *slogutil.Logger) *cli.Command {
 
 $ ghproj init
 `,
-		Action: urfave.Action(rc.action, logger),
-		Flags:  []cli.Flag{},
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return rc.action(ctx, logger, globalFlags)
+		},
 	}
 }
 
-func (rc *initCommand) action(ctx context.Context, c *cli.Command, logger *slogutil.Logger) error {
+func (rc *initCommand) action(ctx context.Context, logger *slogutil.Logger, flags *GlobalFlags) error {
 	fs := afero.NewOsFs()
-	if err := logger.SetLevel(c.String("log-level")); err != nil {
+	if err := logger.SetLevel(flags.LogLevel); err != nil {
 		return fmt.Errorf("set log level: %w", err)
 	}
 	ctrl := initcmd.NewController(fs)
