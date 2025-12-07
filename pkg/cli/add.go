@@ -9,13 +9,21 @@ import (
 	"github.com/suzuki-shunsuke/ghproj/pkg/controller/add"
 	"github.com/suzuki-shunsuke/ghproj/pkg/github"
 	"github.com/suzuki-shunsuke/slog-util/slogutil"
-	"github.com/suzuki-shunsuke/urfave-cli-v3-util/urfave"
 	"github.com/urfave/cli/v3"
 )
 
 type addCommand struct{}
 
-func (rc *addCommand) command(logger *slogutil.Logger) *cli.Command {
+type addFlags struct {
+	*GlobalFlags
+
+	Config string
+}
+
+func (rc *addCommand) command(logger *slogutil.Logger, globalFlags *GlobalFlags) *cli.Command {
+	flags := &addFlags{
+		GlobalFlags: globalFlags,
+	}
 	return &cli.Command{
 		Name:  "add",
 		Usage: "Add GitHub Issues and Pull Requests to GitHub Projects",
@@ -23,26 +31,29 @@ func (rc *addCommand) command(logger *slogutil.Logger) *cli.Command {
 
 $ ghproj add
 `,
-		Action: urfave.Action(rc.action, logger),
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return rc.action(ctx, logger, flags)
+		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "config",
-				Aliases: []string{"c"},
-				Usage:   "configuration file path",
-				Sources: cli.EnvVars("GHPROJ_CONFIG"),
+				Name:        "config",
+				Aliases:     []string{"c"},
+				Usage:       "configuration file path",
+				Sources:     cli.EnvVars("GHPROJ_CONFIG"),
+				Destination: &flags.Config,
 			},
 		},
 	}
 }
 
-func (rc *addCommand) action(ctx context.Context, c *cli.Command, logger *slogutil.Logger) error {
+func (rc *addCommand) action(ctx context.Context, logger *slogutil.Logger, flags *addFlags) error {
 	fs := afero.NewOsFs()
-	if err := logger.SetLevel(c.String("log-level")); err != nil {
+	if err := logger.SetLevel(flags.LogLevel); err != nil {
 		return fmt.Errorf("set log level: %w", err)
 	}
 	gh := github.New(ctx, os.Getenv("GITHUB_TOKEN"))
 	return add.Add(ctx, logger.Logger, fs, gh, &add.Param{ //nolint:wrapcheck
-		ConfigFilePath: c.String("config"),
+		ConfigFilePath: flags.Config,
 		ConfigText:     os.Getenv("GHPROJ_CONFIG_TEXT"),
 	})
 }
