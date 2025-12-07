@@ -21,9 +21,6 @@ func Run(ctx context.Context, logger *slogutil.Logger, env *urfave.Env) error {
 		Commands: []*cli.Command{
 			(&initCommand{}).command(logger),
 			(&addCommand{}).command(logger),
-			(&completionCommand{
-				stdout: env.Stdout,
-			}).command(),
 		},
 	}).Run(ctx, env.Args)
 }
