@@ -7,7 +7,7 @@ require (
 	github.com/shurcooL/githubv4 v0.0.0-20240429030203-be2daab69064
 	github.com/spf13/afero v1.15.0
 	github.com/suzuki-shunsuke/gen-go-jsonschema v0.1.0
-	github.com/suzuki-shunsuke/slog-util v0.3.0
+	github.com/suzuki-shunsuke/slog-util v0.3.1
 	github.com/suzuki-shunsuke/urfave-cli-v3-util v0.2.0
 	github.com/urfave/cli/v3 v3.6.2
 	golang.org/x/oauth2 v0.34.0
