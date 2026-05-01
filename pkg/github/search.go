@@ -91,7 +91,7 @@ func (c *Client) SearchItems(ctx context.Context, query string) ([]*Item, error)
 		if !q.Search.PageInfo.HasNextPage {
 			return items, nil
 		}
-		variables["cursor"] = githubv4.NewString(q.Search.PageInfo.EndCursor)
+		variables["cursor"] = new(q.Search.PageInfo.EndCursor)
 	}
 	return items, nil
 }
