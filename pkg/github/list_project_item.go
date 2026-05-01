@@ -192,7 +192,7 @@ func (c *Client) ListItems(ctx context.Context, projectID string) ([]*Item, erro
 		if !q.Node.ProjectV2.Items.PageInfo.HasNextPage {
 			return items, nil
 		}
-		variables["cursor"] = githubv4.NewString(q.Node.ProjectV2.Items.PageInfo.EndCursor)
+		variables["cursor"] = new(q.Node.ProjectV2.Items.PageInfo.EndCursor)
 	}
 	return items, nil
 }
