@@ -1,6 +1,10 @@
 ---
 name: test (workflow_call)
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      TAKUMI_GUARD_BOT_ID:
+        required: true
 permissions: {}
 jobs:
   path-filter:
@@ -29,4 +33,8 @@ jobs:
 
   test:
     uses: ./.github/workflows/wc-test.yaml
-    permissions: {}
+    permissions:
+      contents: read
+      id-token: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
