@@ -7,6 +7,9 @@ jobs:
     uses: ./.github/workflows/workflow_call_test.yaml
     permissions:
       contents: read
+      id-token: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
   status-check:
     runs-on: ubuntu-24.04
     if: always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))

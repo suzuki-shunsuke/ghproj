@@ -16,3 +16,5 @@ jobs:
       id-token: write
       actions: read
       attestations: write
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
