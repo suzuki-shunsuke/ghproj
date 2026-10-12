@@ -21,7 +21,7 @@ By executing this tool periodically by [GitHub Actions schedule event](https://d
 
 - `GITHUB_TOKEN`: (Required) GitHub access token
 - `GHPROJ_CONFIG`: Configuration file path
-- `GHPROJ_CONFIG_TEXT`: Configuraiton content. This is useful if you want to manage the configuration in a GitHub Actions Workflow file
+- `GHPROJ_CONFIG_TEXT`: Configuration content. This is useful if you want to manage the configuration in a GitHub Actions Workflow file
 - `GITHUB_GRAPHQL_URL`: GraphQL API URL. Defaults to GitHub.com. Set this to use a different GitHub instance. Example: `https://github.company.com/api/graphql`
 
 ## GitHub Access token
@@ -194,7 +194,7 @@ ajv --spec=draft2020 -s json-schema/ghproj.json -d ghproj.yaml
 ## Run ghproj by GitHub Actions
 
 - [GitHub Actions Workflow](https://github.com/szksh-lab/.github/blob/main/.github/workflows/update-project.yaml)
-- [Configuraition](https://github.com/szksh-lab/.github/blob/main/ghproj.yaml)
+- [Configuration](https://github.com/szksh-lab/.github/blob/main/ghproj.yaml)
 - [GitHub Project](https://github.com/orgs/szksh-lab/projects/1)
 
 The workflow is executed periodically by [GitHub Actions schedule event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule), and issues and pull requests are added to the GitHub Project.
@@ -208,7 +208,7 @@ There are several other ways to add issues and pull requests to GitHub Projects.
 
 ### 1. built-in automation
 
-Using built-in automation, you can add issues and pull requests to GitHub Projects wihout codes, but there are several drawback.
+Using built-in automation, you can add issues and pull requests to GitHub Projects without codes, but there are several drawback.
 
 1. You have to create a workflow per repository. This is bothersome
 
