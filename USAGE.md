@@ -11,12 +11,11 @@ USAGE:
    ghproj [global options] [command [command options]]
 
 VERSION:
-   1.0.0
+   1.0.1
 
 COMMANDS:
    init        Scaffold a configuration file
    add         Add GitHub Issues and Pull Requests to GitHub Projects
-   completion  Output shell completion script for bash, zsh, or fish
    version     Show version
    help, h     Shows a list of commands or help for one command
    completion  Output shell completion script for bash, zsh, fish, or Powershell
@@ -45,6 +44,9 @@ DESCRIPTION:
 
 OPTIONS:
    --help, -h  show help
+
+GLOBAL OPTIONS:
+   --log-level string  log level
 ```
 
 ## ghproj add
@@ -55,7 +57,7 @@ NAME:
    ghproj add - Add GitHub Issues and Pull Requests to GitHub Projects
 
 USAGE:
-   ghproj add
+   ghproj add [options]
 
 DESCRIPTION:
    Add GitHub Issues and Pull Requests to GitHub Projects.
@@ -66,86 +68,9 @@ DESCRIPTION:
 OPTIONS:
    --config string, -c string  configuration file path [$GHPROJ_CONFIG]
    --help, -h                  show help
-```
 
-## ghproj completion
-
-```console
-$ ghproj completion --help
-NAME:
-   ghproj completion - Output shell completion script for bash, zsh, or fish
-
-USAGE:
-   ghproj completion [command [command options]]
-
-DESCRIPTION:
-   Output shell completion script for bash, zsh, or fish.
-   Source the output to enable completion.
-
-   e.g.
-
-   .bash_profile
-
-   source <(ghproj completion bash)
-
-   .zprofile
-
-   source <(ghproj completion zsh)
-
-   fish
-
-   ghproj completion fish > ~/.config/fish/completions/ghproj.fish
-
-
-COMMANDS:
-   bash  Output shell completion script for bash
-   zsh   Output shell completion script for zsh
-   fish  Output shell completion script for fish
-
-OPTIONS:
-   --help, -h  show help
-```
-
-### completion bash
-
-```console
-$ completion bash --help
-NAME:
-   ghproj completion bash - Output shell completion script for bash
-
-USAGE:
-   ghproj completion bash
-
-OPTIONS:
-   --help, -h  show help
-```
-
-### completion zsh
-
-```console
-$ completion zsh --help
-NAME:
-   ghproj completion zsh - Output shell completion script for zsh
-
-USAGE:
-   ghproj completion zsh
-
-OPTIONS:
-   --help, -h  show help
-```
-
-### completion fish
-
-```console
-$ completion fish --help
-NAME:
-   ghproj completion fish - Output shell completion script for fish
-
-USAGE:
-   ghproj completion fish
-
-OPTIONS:
-   --help, -h  show help
+GLOBAL OPTIONS:
+   --log-level string  log level
 ```
 
 ## ghproj version
@@ -156,11 +81,14 @@ NAME:
    ghproj version - Show version
 
 USAGE:
-   ghproj version
+   ghproj version [options]
 
 OPTIONS:
    --json, -j  Output version in JSON format
    --help, -h  show help
+
+GLOBAL OPTIONS:
+   --log-level string  log level
 ```
 
 ## ghproj completion
@@ -168,34 +96,89 @@ OPTIONS:
 ```console
 $ ghproj completion --help
 NAME:
-   ghproj completion - Output shell completion script for bash, zsh, or fish
+   ghproj completion - Output shell completion script for bash, zsh, fish, or Powershell
 
 USAGE:
    ghproj completion [command [command options]]
 
 DESCRIPTION:
-   Output shell completion script for bash, zsh, or fish.
+   Output shell completion script for bash, zsh, fish, or Powershell.
    Source the output to enable completion.
 
-   e.g.
-
-   .bash_profile
-
+   # .bashrc
    source <(ghproj completion bash)
 
-   .zprofile
-
+   # .zshrc
    source <(ghproj completion zsh)
 
-   fish
-
+   # fish
    ghproj completion fish > ~/.config/fish/completions/ghproj.fish
+
+   # Powershell
+   Output the script to path/to/autocomplete/ghproj.ps1 and run it.
 
 
 COMMANDS:
-   bash  Output shell completion script for bash
-   zsh   Output shell completion script for zsh
-   fish  Output shell completion script for fish
+   bash  Output bash completion script
+   zsh   Output zsh completion script
+   fish  Output fish completion script
+   pwsh  Output pwsh completion script
+
+OPTIONS:
+   --help, -h  show help
+```
+
+### completion bash
+
+```console
+$ completion bash --help
+NAME:
+   ghproj completion bash - Output bash completion script
+
+USAGE:
+   ghproj completion bash [options]
+
+OPTIONS:
+   --help, -h  show help
+```
+
+### completion zsh
+
+```console
+$ completion zsh --help
+NAME:
+   ghproj completion zsh - Output zsh completion script
+
+USAGE:
+   ghproj completion zsh [options]
+
+OPTIONS:
+   --help, -h  show help
+```
+
+### completion fish
+
+```console
+$ completion fish --help
+NAME:
+   ghproj completion fish - Output fish completion script
+
+USAGE:
+   ghproj completion fish [options]
+
+OPTIONS:
+   --help, -h  show help
+```
+
+### completion pwsh
+
+```console
+$ completion pwsh --help
+NAME:
+   ghproj completion pwsh - Output pwsh completion script
+
+USAGE:
+   ghproj completion pwsh [options]
 
 OPTIONS:
    --help, -h  show help
