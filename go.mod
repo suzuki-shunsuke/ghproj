@@ -1,6 +1,6 @@
 module github.com/suzuki-shunsuke/ghproj
 
-go 1.27.3
+go 1.27.4
 
 require (
 	github.com/expr-lang/expr v1.17.8
